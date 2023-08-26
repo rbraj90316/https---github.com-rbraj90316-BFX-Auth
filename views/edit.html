@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit profile</title>
+    <link rel="stylesheet" href="edit.css">
+</head>
+<body>
+    <header>Edit Your Profile</header>
+    <div id="edit-form">
+        <form id="update-form">
+            <div>
+                <label for="name">Name : &nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="name" placeholder="Enter Your Name">
+            </div><br><br>
+            <div> 
+                <label for="email">Email : &nbsp;&nbsp;</label>
+                <input type="email" id="email" placeholder="Enter Your Email">
+            </div><br><br>
+            <button type="submit">Update Profile</button>
+            <p id="successUpdate"></p>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateForm = document.getElementById('update-form');
+            
+            updateForm.addEventListener('submit', async function(event) {
+                event.preventDefault(); 
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const storedToken = localStorage.getItem('jwtToken'); 
+                try {
+                    const response = await axios.patch('/user/update', {
+                        name: name,
+                        email: email
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${storedToken}` 
+                        }
+                    });
+                    if(storedToken){
+                    document.getElementById('successUpdate').textContent = "Profile updated successfully";
+                    document.getElementById('successUpdate').style.color='green';
+                    document.getElementById('successUpdate').style.display='block';
+                    setTimeout(function() {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                    }
+                    else{
+                        document.getElementById('successUpdate').textContent = "Profile updatation failed";
+                    }
+                } catch (error) {
+                    console.error('Profile update error:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+body{
+    margin: 0;
+    padding: 0;
+
+}
+header{
+    background-color: burlywood;
+    height: 93px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+main{
+    background-color: rgb(141, 85, 28);
+    border: 3px solid black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 620px;
+    margin: auto 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@media screen and (max-width: 771px) {
+    main {   
+        width: 100%; 
+        margin: 0;
+        height: 100vh;
+        border-radius: 15px; 
+        padding: 20px; 
+    }
+}
+@media screen and (max-width: 561px) {
+    header {
+        font-size: 20px;
+    min-width: 124%;
+    }
+}
+@media screen and (max-width: 359px) {
+    header {
+        font-size: 20px; 
+        width: 100%;
+    }
+
+    input[type="email"] {
+        width: 80%; 
+    }
+}

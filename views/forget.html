@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forget Password</title>
+    <link rel="stylesheet"type="text/css" href="forget.css">
+</head>
+<body>
+
+    <header>Reset your password</header>
+    <main>
+        <form id="resetPasswordForm">
+            <div> 
+                <label for="email">Email : &nbsp;&nbsp;</label>
+                <input type="email" id="email" placeholder="Enter Your Email">
+            </div><br><br>
+            <button type="submit">Forget Password</button>
+            <div id="messageContainer"></div>
+           </form>
+        </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    
+    try {
+      const response = await axios.post('/user/forgetpassword', { email });
+      
+      // Display success message to user
+      const messageContainer = document.getElementById('messageContainer');
+      if (response.data.message) {
+        messageContainer.style.color = 'green';
+      } else {
+        messageContainer.style.color = 'red';
+      }
+      messageContainer.innerText = response.data.message;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up Form</title>
+    <link rel="stylesheet"type="text/css" href="signup.css">
+</head>
+<body>
+
+    <nav>
+        <h1>BFX User Authentication Form</h1>
+    </nav>
+    <div id="signup">
+        <form action="/user/signup" method="post">
+            <div>
+                <label for="name">Name : &nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="name" placeholder="Enter Your Name">
+            </div><br><br>
+            <!-- ... other form fields ... -->
+            <div> 
+                <label for="email">Email : &nbsp;&nbsp;</label>
+                <input type="email" id="email" placeholder="Enter Your Email">
+            </div><br><br>
+            <div>
+            <div> 
+                <label for="image">Profile Picture: &nbsp;&nbsp;</label>
+                <input type="file" id="image" name="image">
+            </div><br><br>
+            <div>
+                <label for="password">Password :</label>
+                <input type="password" id="password" placeholder="Enter Your password">
+            </div><br><br>
+            <div>
+                <label for="confpassword">Confirm Password :</label>
+                <input type="password" id="confpassword" placeholder="Enter Confirm password">
+            </div><br><br>
+            <button type="submit">Signup</button>
+            <p>Already have an account? <a href="login.html">Log in here</a></p> <br>
+            <div id="successMessage"></div>
+
+        </form>
+
+
+   <!-- //axios fetch   -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let btn = document.querySelector('button');
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            let signupMessage = document.getElementById("successMessage");
+            let email = document.querySelector("input[type='email']").value;
+            let name = document.querySelector("input[type='text']").value;
+            let password = document.querySelector("input[type='password']").value;
+            let confirmPassword = document.querySelector("input[id='confpassword']").value;
+            let profilePicture = document.querySelector("input[id='image']").files[0];
+            let form = new FormData();
+// Create a FormData object and append form data
+const formData = new FormData();
+    formData.append('image', profilePicture);
+    formData.append('email', email);
+    formData.append('name', name);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    
+    try {
+        let resp = await axios.post('/user/signup', formData);
+        console.log(resp);
+
+        if (resp.data.data && resp.data.data.name && resp.data.data.email && resp.data.data.profilePicture) {
+            // Successful registration with user details
+            signupMessage.innerHTML = "Signup successful!";
+            signupMessage.style.color = "green";
+            setTimeout(function() {
+                window.location.href = 'dashboard.html'; 
+            }, 2000); // Redirect after a 2-second delay
+        } else if (resp.data.message === "user signed up") {
+            // Successful signup despite validation error
+            signupMessage.innerHTML = "Signup successful! You can now log in.";
+            signupMessage.style.color = "green";
+            setTimeout(function() {
+                window.location.href = 'dashboard.html'; 
+            }, 2000);
+        } else if (resp.data.message === "Error while signing up") {
+            // Failed registration
+            signupMessage.innerHTML = "Signup failed. Please check your information and try again.";
+            signupMessage.style.color = "red";
+        } else if (resp.data.message && resp.status === 200) {
+            // Display validation error message
+            signupMessage.innerHTML = "Validation error: " + resp.data.message;
+            signupMessage.style.color = "red";
+        } else {
+            // Unexpected response data
+            signupMessage.innerHTML = "Data not found in the response.";
+            signupMessage.style.color = "red";
+        }
+    } catch (error) {
+        // Handle error from the server or network
+        signupMessage.innerHTML = "An error occurred. Please try again later.";
+        signupMessage.style.color = "red";
+    }
+});
+    </script>
+    
+
+</body>
+</html>

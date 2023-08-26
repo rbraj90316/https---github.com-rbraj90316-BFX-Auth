@@ -1,0 +1,34 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+header{
+    background-color: burlywood;
+    height: 93px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+main{
+    background-color: rgb(141, 85, 28);
+    border: 3px solid black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 620px;
+    margin: auto 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+input{
+    display: none;
+}
+label{
+    background-color: greenyellow;
+    display: inline;
+    border: 3px solid black;
+    border-radius: 8px;
+   padding: 20px;
+}

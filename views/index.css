@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+header{
+    background-color: yellowgreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+main{
+    background-color: rgb(179, 28, 86);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 514px;
+}
+button a{
+    text-decoration: none;
+    color: black;
+}
+button a:active{
+    text-decoration: none;
+}
+button a:hover{
+   color: black;
+}

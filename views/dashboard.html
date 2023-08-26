@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
+</head>
+<body>
+    <nav>
+        <div class="user-profile">
+            <div class="profile-menu">
+                <div class="profile-picture-dropdown">
+                    <img id="profileImage"  alt="Profile Picture">
+                    <ul class="dropdown-content">
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="edit.html">Edit Profile</a></li>
+                        <li><a href="#" id="delete-link">Delete Account</a></li>
+                        <li><a href="#" id="logout-link">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="dashboard-content">
+        <h1>WELCOME TO BeingArtifex prISM CLUB</h1>
+        <p>Boost your Skills now</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Include the Axios library for making HTTP requests -->
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function() {
+            axios.get('/user/logout')
+                .then(function(response) {
+                    // If logout is successful, redirect to the login page
+                    window.location.href = 'login.html';
+                })
+                .catch(function(error) {
+                    console.error('Logout error:', error);
+                });
+        });
+
+        document.getElementById('delete-link').addEventListener('click', async function(event) {
+    event.preventDefault(); // Prevent the default anchor behavior
+
+    if (window.confirm('Are you sure you want to delete your account?')) {
+        try {
+            const storedToken = localStorage.getItem('jwtToken'); // Retrieve the stored token from local storage
+
+            // Send a request to the server to delete the user's account
+            const response = await axios.delete('/user/delete', {
+                headers: {
+                    Authorization: `Bearer ${storedToken}` // Attach the token as an Authorization header
+                }
+            });
+
+            // If account deletion is successful, log the user out and redirect to the login page
+            localStorage.removeItem('jwtToken'); // Remove the token from local storage
+            window.location.href = 'login.html'; // Replace with the actual login page HTML file
+        } catch (error) {
+            console.error('Account deletion error:', error);
+        }
+    }
+});
+
+    </script>
+</body>
+</html>
